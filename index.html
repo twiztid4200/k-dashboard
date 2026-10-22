@@ -13,125 +13,235 @@
     --muted: #8a8a96;
     --accent: #c8c8d0;
     --ok: #6ee7b7;
-    --warn: #fbbf24;
+  }
+  [data-theme="dim"] {
+    --bg: #121216;
+    --panel: #1a1a1f;
+    --border: #2a2a32;
+    --text: #d8d8e0;
+    --muted: #9a9aa6;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; }
   body { display: flex; flex-direction: column; }
   header {
     height: 52px; border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; padding: 0 16px; gap: 16px;
-    background: var(--panel);
+    display: flex; align-items: center; padding: 0 16px; gap: 12px;
+    background: var(--panel); flex-shrink: 0;
   }
   .mark { font-weight: 700; letter-spacing: 0.2em; font-size: 18px; }
-  .private { font-size: 11px; letter-spacing: 0.12em; color: var(--muted); border: 1px solid var(--border); padding: 4px 8px; }
+  .private { font-size: 11px; letter-spacing: 0.12em; color: var(--muted); border: 1px solid var(--border); padding: 4px 8px; white-space: nowrap; }
   .spacer { flex: 1; }
   .status { font-size: 12px; color: var(--ok); }
+  .menu-btn { display: none; background: none; border: 1px solid var(--border); color: var(--text); padding: 6px 10px; border-radius: 4px; cursor: pointer; }
   .layout { display: flex; flex: 1; min-height: 0; }
   nav {
     width: 200px; border-right: 1px solid var(--border); background: var(--panel);
-    padding: 12px 0; display: flex; flex-direction: column;
+    padding: 12px 0; display: flex; flex-direction: column; flex-shrink: 0;
   }
   nav a {
-    display: block; padding: 10px 16px; color: var(--muted); text-decoration: none; font-size: 13px;
+    display: block; padding: 12px 16px; color: var(--muted); text-decoration: none; font-size: 14px; min-height: 44px;
   }
   nav a.active, nav a:hover { color: var(--text); background: #1a1a20; }
   main { flex: 1; padding: 20px; overflow: auto; }
+  section { display: none; }
+  section.active { display: block; }
   h1 { font-size: 15px; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 16px; color: var(--muted); }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
   .card {
     background: var(--panel); border: 1px solid var(--border); padding: 14px; border-radius: 6px;
   }
   .card h2 { font-size: 12px; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
-  .card p, .card li { font-size: 13px; line-height: 1.5; color: var(--text); }
-  .card ul { list-style: none; }
-  .card li { padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .card p, .card li { font-size: 14px; line-height: 1.5; color: var(--text); }
+  .card ul { list-style: none; max-height: 240px; overflow-y: auto; }
+  .card li { padding: 6px 0; border-bottom: 1px solid var(--border); }
   .card li:last-child { border: 0; }
   .input-row { display: flex; gap: 8px; margin-top: 8px; }
   input, select, button {
-    background: #0a0a0c; border: 1px solid var(--border); color: var(--text);
-    padding: 8px 10px; font-size: 13px; border-radius: 4px;
+    background: var(--bg); border: 1px solid var(--border); color: var(--text);
+    padding: 10px 12px; font-size: 14px; border-radius: 4px; min-height: 44px;
   }
+  input { flex: 1; }
   button { cursor: pointer; }
   button:hover { border-color: #333; }
   .full { grid-column: 1 / -1; }
-  .muted { color: var(--muted); font-size: 12px; }
+  .muted { color: var(--muted); font-size: 13px; }
   footer {
     height: 36px; border-top: 1px solid var(--border); display: flex; align-items: center;
-    padding: 0 16px; font-size: 11px; color: var(--muted); background: var(--panel);
+    padding: 0 16px; font-size: 11px; color: var(--muted); background: var(--panel); flex-shrink: 0;
+  }
+  @media (max-width: 700px) {
+    .menu-btn { display: block; }
+    .private { display: none; }
+    nav {
+      position: fixed; top: 52px; left: 0; bottom: 36px; z-index: 10;
+      transform: translateX(-100%); transition: transform 0.2s;
+      width: 220px;
+    }
+    nav.open { transform: translateX(0); }
+    .grid { grid-template-columns: 1fr; }
+    main { padding: 16px; }
+    .input-row { flex-direction: column; }
+    .input-row button { width: 100%; }
   }
 </style>
 </head>
 <body>
   <header>
+    <button class="menu-btn" id="menuBtn">☰</button>
     <div class="mark">K</div>
     <div class="private">PRIVATE · GROUP ONLY</div>
     <div class="spacer"></div>
     <div class="status">● CLEAN</div>
   </header>
   <div class="layout">
-    <nav>
-      <a class="active" href="#overview">Overview</a>
-      <a href="#members">Members</a>
-      <a href="#input">Input</a>
-      <a href="#settings">Settings</a>
-      <a href="#logs">Logs</a>
+    <nav id="nav">
+      <a class="active" data-section="overview">Overview</a>
+      <a data-section="members">Members</a>
+      <a data-section="input">Input</a>
+      <a data-section="settings">Settings</a>
+      <a data-section="logs">Logs</a>
     </nav>
     <main>
-      <h1>OVERVIEW</h1>
-      <div class="grid">
-        <div class="card">
-          <h2>GROUP</h2>
-          <p>Active members: 0</p>
-          <p class="muted">No external accounts. Local group only.</p>
-        </div>
-        <div class="card">
-          <h2>STATE</h2>
-          <p>Phase 1 · Layout</p>
-          <p class="muted">No games. No external data.</p>
-        </div>
-        <div class="card full">
-          <h2>RECENT INPUT</h2>
-          <ul>
-            <li class="muted">— empty —</li>
-          </ul>
-          <div class="input-row">
-            <input type="text" placeholder="Share input…" style="flex:1" />
-            <button>Send</button>
+      <section id="overview" class="active">
+        <h1>OVERVIEW</h1>
+        <div class="grid">
+          <div class="card">
+            <h2>GROUP</h2>
+            <p id="memberCount">Active members: 0</p>
+            <p class="muted">Founders access only. Local group.</p>
+          </div>
+          <div class="card">
+            <h2>STATE</h2>
+            <p>Phase 1 · Layout</p>
+            <p class="muted">No games. No external data.</p>
+          </div>
+          <div class="card full">
+            <h2>RECENT INPUT</h2>
+            <ul id="inputList"><li class="muted">— empty —</li></ul>
+            <div class="input-row">
+              <input type="text" id="inputField" placeholder="Share input…" />
+              <button id="sendBtn">Send</button>
+            </div>
           </div>
         </div>
-      </div>
-
-      <h1>SETTINGS</h1>
-      <div class="grid">
+      </section>
+      <section id="members">
+        <h1>MEMBERS</h1>
         <div class="card">
-          <h2>ACCESS</h2>
-          <p>Mode: Private group</p>
-          <p class="muted">No viewers. No invites. No public link.</p>
+          <p class="muted">Founders only. No external accounts.</p>
+          <ul id="memberList"><li class="muted">— none —</li></ul>
         </div>
+      </section>
+      <section id="input">
+        <h1>INPUT</h1>
         <div class="card">
-          <h2>DISPLAY</h2>
-          <div class="input-row">
-            <select>
-              <option>Dark</option>
-              <option>Dim</option>
+          <p class="muted">Shared input log. Local only.</p>
+          <ul id="fullInputList"></ul>
+        </div>
+      </section>
+      <section id="settings">
+        <h1>SETTINGS</h1>
+        <div class="grid">
+          <div class="card">
+            <h2>ACCESS</h2>
+            <p>Mode: Private group</p>
+            <p class="muted">Founders link only. No viewers. No invites.</p>
+          </div>
+          <div class="card">
+            <h2>DISPLAY</h2>
+            <select id="themeSelect">
+              <option value="dark">Dark</option>
+              <option value="dim">Dim</option>
             </select>
           </div>
-        </div>
-        <div class="card">
-          <h2>NOTIFICATIONS</h2>
-          <p class="muted">Off by default.</p>
-        </div>
-        <div class="card">
-          <h2>DATA</h2>
-          <p class="muted">Local only. No background sync.</p>
-          <div class="input-row">
-            <button>Clear local</button>
+          <div class="card">
+            <h2>NOTIFICATIONS</h2>
+            <p class="muted">Off by default.</p>
+          </div>
+          <div class="card">
+            <h2>DATA</h2>
+            <p class="muted">Local only. No background sync.</p>
+            <button id="clearBtn" style="margin-top:8px">Clear local</button>
           </div>
         </div>
-      </div>
+      </section>
+      <section id="logs">
+        <h1>LOGS</h1>
+        <div class="card">
+          <p class="muted">Local activity only.</p>
+          <ul id="logList"><li class="muted">— empty —</li></ul>
+        </div>
+      </section>
     </main>
   </div>
-  <footer>K · PHASE 1 · PRIVATE GROUP · NO EXTERNAL</footer>
+  <footer>K · PHASE 1 · PRIVATE GROUP · FOUNDERS ONLY</footer>
+  <script>
+    const nav = document.getElementById('nav');
+    const menuBtn = document.getElementById('menuBtn');
+    const sections = document.querySelectorAll('section');
+    const links = document.querySelectorAll('nav a');
+    const inputField = document.getElementById('inputField');
+    const sendBtn = document.getElementById('sendBtn');
+    const inputList = document.getElementById('inputList');
+    const fullInputList = document.getElementById('fullInputList');
+    const logList = document.getElementById('logList');
+    const clearBtn = document.getElementById('clearBtn');
+    const themeSelect = document.getElementById('themeSelect');
+
+    let inputs = JSON.parse(localStorage.getItem('k_inputs') || '[]');
+    let logs = JSON.parse(localStorage.getItem('k_logs') || '[]');
+
+    function render() {
+      inputList.innerHTML = inputs.length ? inputs.slice(-5).reverse().map(i => `<li>${i}</li>`).join('') : '<li class="muted">— empty —</li>';
+      fullInputList.innerHTML = inputs.length ? inputs.slice().reverse().map(i => `<li>${i}</li>`).join('') : '<li class="muted">— empty —</li>';
+      logList.innerHTML = logs.length ? logs.slice(-10).reverse().map(l => `<li>${l}</li>`).join('') : '<li class="muted">— empty —</li>';
+    }
+    function addLog(msg) {
+      logs.push(new Date().toLocaleTimeString() + ' · ' + msg);
+      localStorage.setItem('k_logs', JSON.stringify(logs));
+      render();
+    }
+    function send() {
+      const v = inputField.value.trim();
+      if (!v) return;
+      inputs.push(v);
+      localStorage.setItem('k_inputs', JSON.stringify(inputs));
+      inputField.value = '';
+      addLog('Input shared');
+      render();
+    }
+    links.forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const id = a.dataset.section;
+        sections.forEach(s => s.classList.toggle('active', s.id === id));
+        links.forEach(l => l.classList.toggle('active', l === a));
+        nav.classList.remove('open');
+      });
+    });
+    menuBtn.addEventListener('click', () => nav.classList.toggle('open'));
+    sendBtn.addEventListener('click', send);
+    inputField.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
+    clearBtn.addEventListener('click', () => {
+      if (confirm('Clear all local data?')) {
+        inputs = []; logs = [];
+        localStorage.removeItem('k_inputs');
+        localStorage.removeItem('k_logs');
+        addLog('Local data cleared');
+        render();
+      }
+    });
+    themeSelect.addEventListener('change', () => {
+      document.documentElement.dataset.theme = themeSelect.value === 'dim' ? 'dim' : '';
+      localStorage.setItem('k_theme', themeSelect.value);
+    });
+    const savedTheme = localStorage.getItem('k_theme');
+    if (savedTheme) {
+      themeSelect.value = savedTheme;
+      document.documentElement.dataset.theme = savedTheme === 'dim' ? 'dim' : '';
+    }
+    render();
+  </script>
 </body>
 </html>
