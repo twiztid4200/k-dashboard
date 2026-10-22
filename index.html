@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>K</title>
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --panel: #111114;
+    --border: #1e1e24;
+    --text: #e8e8ec;
+    --muted: #8a8a96;
+    --accent: #c8c8d0;
+    --ok: #6ee7b7;
+    --warn: #fbbf24;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; }
+  body { display: flex; flex-direction: column; }
+  header {
+    height: 52px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; padding: 0 16px; gap: 16px;
+    background: var(--panel);
+  }
+  .mark { font-weight: 700; letter-spacing: 0.2em; font-size: 18px; }
+  .private { font-size: 11px; letter-spacing: 0.12em; color: var(--muted); border: 1px solid var(--border); padding: 4px 8px; }
+  .spacer { flex: 1; }
+  .status { font-size: 12px; color: var(--ok); }
+  .layout { display: flex; flex: 1; min-height: 0; }
+  nav {
+    width: 200px; border-right: 1px solid var(--border); background: var(--panel);
+    padding: 12px 0; display: flex; flex-direction: column;
+  }
+  nav a {
+    display: block; padding: 10px 16px; color: var(--muted); text-decoration: none; font-size: 13px;
+  }
+  nav a.active, nav a:hover { color: var(--text); background: #1a1a20; }
+  main { flex: 1; padding: 20px; overflow: auto; }
+  h1 { font-size: 15px; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 16px; color: var(--muted); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); padding: 14px; border-radius: 6px;
+  }
+  .card h2 { font-size: 12px; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+  .card p, .card li { font-size: 13px; line-height: 1.5; color: var(--text); }
+  .card ul { list-style: none; }
+  .card li { padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .card li:last-child { border: 0; }
+  .input-row { display: flex; gap: 8px; margin-top: 8px; }
+  input, select, button {
+    background: #0a0a0c; border: 1px solid var(--border); color: var(--text);
+    padding: 8px 10px; font-size: 13px; border-radius: 4px;
+  }
+  button { cursor: pointer; }
+  button:hover { border-color: #333; }
+  .full { grid-column: 1 / -1; }
+  .muted { color: var(--muted); font-size: 12px; }
+  footer {
+    height: 36px; border-top: 1px solid var(--border); display: flex; align-items: center;
+    padding: 0 16px; font-size: 11px; color: var(--muted); background: var(--panel);
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="mark">K</div>
+    <div class="private">PRIVATE · GROUP ONLY</div>
+    <div class="spacer"></div>
+    <div class="status">● CLEAN</div>
+  </header>
+  <div class="layout">
+    <nav>
+      <a class="active" href="#overview">Overview</a>
+      <a href="#members">Members</a>
+      <a href="#input">Input</a>
+      <a href="#settings">Settings</a>
+      <a href="#logs">Logs</a>
+    </nav>
+    <main>
+      <h1>OVERVIEW</h1>
+      <div class="grid">
+        <div class="card">
+          <h2>GROUP</h2>
+          <p>Active members: 0</p>
+          <p class="muted">No external accounts. Local group only.</p>
+        </div>
+        <div class="card">
+          <h2>STATE</h2>
+          <p>Phase 1 · Layout</p>
+          <p class="muted">No games. No external data.</p>
+        </div>
+        <div class="card full">
+          <h2>RECENT INPUT</h2>
+          <ul>
+            <li class="muted">— empty —</li>
+          </ul>
+          <div class="input-row">
+            <input type="text" placeholder="Share input…" style="flex:1" />
+            <button>Send</button>
+          </div>
+        </div>
+      </div>
+
+      <h1>SETTINGS</h1>
+      <div class="grid">
+        <div class="card">
+          <h2>ACCESS</h2>
+          <p>Mode: Private group</p>
+          <p class="muted">No viewers. No invites. No public link.</p>
+        </div>
+        <div class="card">
+          <h2>DISPLAY</h2>
+          <div class="input-row">
+            <select>
+              <option>Dark</option>
+              <option>Dim</option>
+            </select>
+          </div>
+        </div>
+        <div class="card">
+          <h2>NOTIFICATIONS</h2>
+          <p class="muted">Off by default.</p>
+        </div>
+        <div class="card">
+          <h2>DATA</h2>
+          <p class="muted">Local only. No background sync.</p>
+          <div class="input-row">
+            <button>Clear local</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer>K · PHASE 1 · PRIVATE GROUP · NO EXTERNAL</footer>
+</body>
+</html>
