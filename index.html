@@ -6,77 +6,90 @@
 <title>K</title>
 <style>
   :root {
-    --bg: #0a0a0c;
-    --panel: #111114;
-    --border: #1e1e24;
-    --text: #e8e8ec;
-    --muted: #8a8a96;
-    --accent: #c8c8d0;
-    --ok: #6ee7b7;
+    --bg: #0c0c0e;
+    --panel: #141417;
+    --card: #18181c;
+    --border: #2a2a30;
+    --text: #f0f0f4;
+    --muted: #8e8e9a;
+    --accent: #6ee7b7;
+    --hover: #222228;
   }
   [data-theme="dim"] {
     --bg: #121216;
     --panel: #1a1a1f;
-    --border: #2a2a32;
-    --text: #d8d8e0;
+    --card: #1e1e24;
+    --border: #32323a;
+    --text: #e8e8ee;
     --muted: #9a9aa6;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; }
+  html, body { height: 100%; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
   body { display: flex; flex-direction: column; }
   header {
-    height: 52px; border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; padding: 0 16px; gap: 12px;
+    height: 56px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; padding: 0 20px; gap: 16px;
     background: var(--panel); flex-shrink: 0;
   }
-  .mark { font-weight: 700; letter-spacing: 0.2em; font-size: 18px; }
-  .private { font-size: 11px; letter-spacing: 0.12em; color: var(--muted); border: 1px solid var(--border); padding: 4px 8px; white-space: nowrap; }
+  .mark { font-weight: 600; letter-spacing: 0.18em; font-size: 16px; }
+  .private { font-size: 11px; letter-spacing: 0.1em; color: var(--muted); border: 1px solid var(--border); padding: 5px 10px; border-radius: 4px; }
   .spacer { flex: 1; }
-  .status { font-size: 12px; color: var(--ok); }
-  .menu-btn { display: none; background: none; border: 1px solid var(--border); color: var(--text); padding: 6px 10px; border-radius: 4px; cursor: pointer; }
+  .status { font-size: 12px; color: var(--accent); font-weight: 500; }
+  .menu-btn { display: none; background: none; border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 6px; cursor: pointer; }
   .layout { display: flex; flex: 1; min-height: 0; }
   nav {
-    width: 200px; border-right: 1px solid var(--border); background: var(--panel);
-    padding: 12px 0; display: flex; flex-direction: column; flex-shrink: 0;
+    width: 220px; border-right: 1px solid var(--border); background: var(--panel);
+    padding: 16px 0; display: flex; flex-direction: column; flex-shrink: 0;
   }
   nav a {
-    display: block; padding: 12px 16px; color: var(--muted); text-decoration: none; font-size: 14px; min-height: 44px;
+    display: block; padding: 11px 20px; color: var(--muted); text-decoration: none;
+    font-size: 14px; min-height: 44px; border-left: 2px solid transparent;
   }
-  nav a.active, nav a:hover { color: var(--text); background: #1a1a20; }
-  main { flex: 1; padding: 20px; overflow: auto; }
+  nav a.active { color: var(--text); background: var(--hover); border-left-color: var(--accent); }
+  nav a:hover { color: var(--text); background: var(--hover); }
+  main { flex: 1; padding: 24px; overflow: auto; }
   section { display: none; }
   section.active { display: block; }
-  h1 { font-size: 15px; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 16px; color: var(--muted); }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  h1 { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; margin-bottom: 20px; color: var(--muted); text-transform: uppercase; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
   .card {
-    background: var(--panel); border: 1px solid var(--border); padding: 14px; border-radius: 6px;
+    background: var(--card); border: 1px solid var(--border); padding: 18px; border-radius: 8px;
   }
-  .card h2 { font-size: 12px; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
-  .card p, .card li { font-size: 14px; line-height: 1.5; color: var(--text); }
-  .card ul { list-style: none; max-height: 240px; overflow-y: auto; }
-  .card li { padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .card h2 { font-size: 11px; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; font-weight: 600; }
+  .card p, .card li { font-size: 14px; line-height: 1.55; color: var(--text); }
+  .card ul { list-style: none; max-height: 300px; overflow-y: auto; }
+  .card li { padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; gap: 12px; align-items: center; }
   .card li:last-child { border: 0; }
-  .input-row { display: flex; gap: 8px; margin-top: 8px; }
+  .input-row { display: flex; gap: 8px; margin-top: 12px; }
   input, select, button {
     background: var(--bg); border: 1px solid var(--border); color: var(--text);
-    padding: 10px 12px; font-size: 14px; border-radius: 4px; min-height: 44px;
+    padding: 10px 14px; font-size: 14px; border-radius: 6px; min-height: 42px;
   }
+  input:focus, select:focus { outline: none; border-color: #3a3a44; }
   input { flex: 1; }
-  button { cursor: pointer; }
-  button:hover { border-color: #333; }
+  button { cursor: pointer; font-weight: 500; }
+  button:hover { background: var(--hover); }
   .full { grid-column: 1 / -1; }
   .muted { color: var(--muted); font-size: 13px; }
+  .drop {
+    border: 1.5px dashed var(--border); border-radius: 8px; padding: 28px; text-align: center;
+    color: var(--muted); margin: 12px 0; background: var(--bg); transition: 0.15s;
+  }
+  .drop.over { border-color: var(--accent); background: #0f1f18; color: var(--text); }
+  .file-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .file-item img { width: 36px; height: 36px; object-fit: cover; border-radius: 4px; }
+  .tag { font-size: 11px; background: var(--hover); padding: 3px 8px; border-radius: 4px; color: var(--muted); }
+  .digest { font-size: 14px; line-height: 1.6; color: var(--text); }
   footer {
-    height: 36px; border-top: 1px solid var(--border); display: flex; align-items: center;
-    padding: 0 16px; font-size: 11px; color: var(--muted); background: var(--panel); flex-shrink: 0;
+    height: 40px; border-top: 1px solid var(--border); display: flex; align-items: center;
+    padding: 0 20px; font-size: 11px; color: var(--muted); background: var(--panel); flex-shrink: 0; letter-spacing: 0.04em;
   }
   @media (max-width: 700px) {
     .menu-btn { display: block; }
     .private { display: none; }
     nav {
-      position: fixed; top: 52px; left: 0; bottom: 36px; z-index: 10;
-      transform: translateX(-100%); transition: transform 0.2s;
-      width: 220px;
+      position: fixed; top: 56px; left: 0; bottom: 40px; z-index: 10;
+      transform: translateX(-100%); transition: transform 0.2s; width: 240px;
     }
     nav.open { transform: translateX(0); }
     .grid { grid-template-columns: 1fr; }
@@ -92,155 +105,322 @@
     <div class="mark">K</div>
     <div class="private">PRIVATE · GROUP ONLY</div>
     <div class="spacer"></div>
-    <div class="status">● CLEAN</div>
+    <div class="status" id="who">● SET IDENTITY</div>
   </header>
   <div class="layout">
     <nav id="nav">
       <a class="active" data-section="overview">Overview</a>
       <a data-section="members">Members</a>
       <a data-section="input">Input</a>
+      <a data-section="files">Files</a>
+      <a data-section="agents">Agents</a>
+      <a data-section="apps">Apps</a>
       <a data-section="settings">Settings</a>
       <a data-section="logs">Logs</a>
     </nav>
     <main>
       <section id="overview" class="active">
-        <h1>OVERVIEW</h1>
+        <h1>Overview</h1>
         <div class="grid">
           <div class="card">
-            <h2>GROUP</h2>
-            <p id="memberCount">Active members: 0</p>
-            <p class="muted">Founders access only. Local group.</p>
+            <h2>Group</h2>
+            <p id="memberCount">Active: 0</p>
+            <p class="muted">Founders only. Local.</p>
           </div>
           <div class="card">
-            <h2>STATE</h2>
-            <p>Phase 1 · Layout</p>
-            <p class="muted">No games. No external data.</p>
+            <h2>State</h2>
+            <p>Phase 2 · Depth</p>
+            <p class="muted" id="inputCount">Inputs: 0</p>
           </div>
           <div class="card full">
-            <h2>RECENT INPUT</h2>
-            <ul id="inputList"><li class="muted">— empty —</li></ul>
+            <h2>Today</h2>
+            <div class="digest" id="digest">No activity yet.</div>
+          </div>
+          <div class="card full">
+            <h2>Recent Input</h2>
+            <ul id="recentInputs"><li class="muted">— empty —</li></ul>
             <div class="input-row">
-              <input type="text" id="inputField" placeholder="Share input…" />
-              <button id="sendBtn">Send</button>
+              <input type="text" id="quickInput" placeholder="Share input…" />
+              <button id="quickSend">Send</button>
             </div>
           </div>
         </div>
       </section>
       <section id="members">
-        <h1>MEMBERS</h1>
+        <h1>Members</h1>
         <div class="card">
-          <p class="muted">Founders only. No external accounts.</p>
+          <p class="muted">Local founders only.</p>
           <ul id="memberList"><li class="muted">— none —</li></ul>
+          <div class="input-row">
+            <input type="text" id="nameInput" placeholder="Your name / handle" />
+            <button id="setName">Set</button>
+          </div>
         </div>
       </section>
       <section id="input">
-        <h1>INPUT</h1>
+        <h1>Input</h1>
         <div class="card">
-          <p class="muted">Shared input log. Local only.</p>
-          <ul id="fullInputList"></ul>
+          <p class="muted">Shared, attributed stream.</p>
+          <div class="input-row">
+            <input type="text" id="searchInput" placeholder="Filter by keyword or founder…" />
+          </div>
+          <ul id="fullInputs"></ul>
+        </div>
+      </section>
+      <section id="files">
+        <h1>Files</h1>
+        <div class="card">
+          <p class="muted">Drag photos or files. Organize with groups. Local only. Max ~2 MB per file.</p>
+          <div class="drop" id="dropZone">Drop files here or click to select</div>
+          <input type="file" id="fileInput" multiple accept="image/*,.pdf,.txt,.json" style="display:none" />
+          <div class="input-row">
+            <select id="groupFilter"><option value="">All groups</option></select>
+          </div>
+          <div id="fileList"></div>
+        </div>
+      </section>
+      <section id="agents">
+        <h1>Agents</h1>
+        <div class="card">
+          <p class="muted">Empty slots. Owned by founders. Not running yet.</p>
+          <ul id="agentList"><li class="muted">— none —</li></ul>
+          <div class="input-row">
+            <input type="text" id="agentName" placeholder="Agent name" />
+            <button id="addAgent">Add slot</button>
+          </div>
+        </div>
+      </section>
+      <section id="apps">
+        <h1>Apps</h1>
+        <div class="card">
+          <p class="muted">Internal tools registry. No external. No games.</p>
+          <ul id="appList"><li class="muted">— none —</li></ul>
+          <div class="input-row">
+            <input type="text" id="appName" placeholder="App / program name" />
+            <button id="addApp">Add</button>
+          </div>
         </div>
       </section>
       <section id="settings">
-        <h1>SETTINGS</h1>
+        <h1>Settings</h1>
         <div class="grid">
           <div class="card">
-            <h2>ACCESS</h2>
-            <p>Mode: Private group</p>
-            <p class="muted">Founders link only. No viewers. No invites.</p>
+            <h2>Identity</h2>
+            <p id="myName">Not set</p>
           </div>
           <div class="card">
-            <h2>DISPLAY</h2>
-            <select id="themeSelect">
-              <option value="dark">Dark</option>
-              <option value="dim">Dim</option>
-            </select>
+            <h2>Display</h2>
+            <select id="themeSelect"><option value="dark">Dark</option><option value="dim">Dim</option></select>
           </div>
           <div class="card">
-            <h2>NOTIFICATIONS</h2>
-            <p class="muted">Off by default.</p>
-          </div>
-          <div class="card">
-            <h2>DATA</h2>
-            <p class="muted">Local only. No background sync.</p>
+            <h2>Data</h2>
+            <button id="exportBtn">Export state</button>
+            <button id="importBtn" style="margin-left:8px">Import</button>
+            <input type="file" id="importFile" accept=".json" style="display:none" />
             <button id="clearBtn" style="margin-top:8px">Clear local</button>
           </div>
         </div>
       </section>
       <section id="logs">
-        <h1>LOGS</h1>
+        <h1>Logs</h1>
         <div class="card">
-          <p class="muted">Local activity only.</p>
           <ul id="logList"><li class="muted">— empty —</li></ul>
         </div>
       </section>
     </main>
   </div>
-  <footer>K · PHASE 1 · PRIVATE GROUP · FOUNDERS ONLY</footer>
+  <footer>K · PHASE 2 · PRIVATE GROUP · FOUNDERS ONLY</footer>
   <script>
     const nav = document.getElementById('nav');
     const menuBtn = document.getElementById('menuBtn');
     const sections = document.querySelectorAll('section');
     const links = document.querySelectorAll('nav a');
-    const inputField = document.getElementById('inputField');
-    const sendBtn = document.getElementById('sendBtn');
-    const inputList = document.getElementById('inputList');
-    const fullInputList = document.getElementById('fullInputList');
+    const who = document.getElementById('who');
+    const myNameEl = document.getElementById('myName');
+    const nameInput = document.getElementById('nameInput');
+    const setNameBtn = document.getElementById('setName');
+    const quickInput = document.getElementById('quickInput');
+    const quickSend = document.getElementById('quickSend');
+    const recentInputs = document.getElementById('recentInputs');
+    const fullInputs = document.getElementById('fullInputs');
+    const searchInput = document.getElementById('searchInput');
+    const memberList = document.getElementById('memberList');
+    const memberCount = document.getElementById('memberCount');
+    const inputCount = document.getElementById('inputCount');
+    const digest = document.getElementById('digest');
+    const agentList = document.getElementById('agentList');
+    const appList = document.getElementById('appList');
+    const fileList = document.getElementById('fileList');
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const groupFilter = document.getElementById('groupFilter');
     const logList = document.getElementById('logList');
-    const clearBtn = document.getElementById('clearBtn');
     const themeSelect = document.getElementById('themeSelect');
+    const exportBtn = document.getElementById('exportBtn');
+    const importBtn = document.getElementById('importBtn');
+    const importFile = document.getElementById('importFile');
+    const clearBtn = document.getElementById('clearBtn');
+    const agentName = document.getElementById('agentName');
+    const addAgent = document.getElementById('addAgent');
+    const appName = document.getElementById('appName');
+    const addApp = document.getElementById('addApp');
 
-    let inputs = JSON.parse(localStorage.getItem('k_inputs') || '[]');
-    let logs = JSON.parse(localStorage.getItem('k_logs') || '[]');
+    const MAX_FILE = 2 * 1024 * 1024;
+    let state = JSON.parse(localStorage.getItem('k_state') || '{"me":"","inputs":[],"agents":[],"apps":[],"files":[],"logs":[],"members":[]}');
+    let filter = '';
 
+    function save() { localStorage.setItem('k_state', JSON.stringify(state)); }
+    function log(msg) {
+      state.logs.push(new Date().toLocaleTimeString() + ' · ' + msg);
+      if (state.logs.length > 50) state.logs = state.logs.slice(-50);
+      save();
+    }
+    function todayCount(arr) {
+      const today = new Date().toDateString();
+      return arr.filter(x => x.date === today).length;
+    }
     function render() {
-      inputList.innerHTML = inputs.length ? inputs.slice(-5).reverse().map(i => `<li>${i}</li>`).join('') : '<li class="muted">— empty —</li>';
-      fullInputList.innerHTML = inputs.length ? inputs.slice().reverse().map(i => `<li>${i}</li>`).join('') : '<li class="muted">— empty —</li>';
-      logList.innerHTML = logs.length ? logs.slice(-10).reverse().map(l => `<li>${l}</li>`).join('') : '<li class="muted">— empty —</li>';
-    }
-    function addLog(msg) {
-      logs.push(new Date().toLocaleTimeString() + ' · ' + msg);
-      localStorage.setItem('k_logs', JSON.stringify(logs));
-      render();
-    }
-    function send() {
-      const v = inputField.value.trim();
-      if (!v) return;
-      inputs.push(v);
-      localStorage.setItem('k_inputs', JSON.stringify(inputs));
-      inputField.value = '';
-      addLog('Input shared');
-      render();
-    }
-    links.forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        const id = a.dataset.section;
-        sections.forEach(s => s.classList.toggle('active', s.id === id));
-        links.forEach(l => l.classList.toggle('active', l === a));
-        nav.classList.remove('open');
+      who.textContent = state.me ? '● ' + state.me : '● SET IDENTITY';
+      myNameEl.textContent = state.me || 'Not set';
+      const members = [...new Set([state.me, ...state.inputs.map(i => i.who)].filter(Boolean))];
+      state.members = members;
+      memberCount.textContent = 'Active: ' + members.length;
+      inputCount.textContent = 'Inputs: ' + state.inputs.length;
+      memberList.innerHTML = members.length ? members.map(m => `<li>${m}</li>`).join('') : '<li class="muted">— none —</li>';
+      const recent = state.inputs.slice(-5).reverse();
+      recentInputs.innerHTML = recent.length ? recent.map(i => `<li><span>${i.text}</span><span class="muted">${i.who}</span></li>`).join('') : '<li class="muted">— empty —</li>';
+      const shown = state.inputs.filter(i => !filter || i.text.toLowerCase().includes(filter) || i.who.toLowerCase().includes(filter));
+      fullInputs.innerHTML = shown.length ? shown.slice().reverse().map(i => `<li><span>${i.text}</span><span class="muted">${i.who} · ${i.time}</span></li>`).join('') : '<li class="muted">— empty —</li>';
+      agentList.innerHTML = state.agents.length ? state.agents.map(a => `<li><span>${a.name}</span><span class="muted">${a.owner}</span></li>`).join('') : '<li class="muted">— none —</li>';
+      appList.innerHTML = state.apps.length ? state.apps.map(a => `<li><span>${a.name}</span><span class="muted">${a.owner}</span></li>`).join('') : '<li class="muted">— none —</li>';
+      logList.innerHTML = state.logs.length ? state.logs.slice(-10).reverse().map(l => `<li>${l}</li>`).join('') : '<li class="muted">— empty —</li>';
+      const groups = [...new Set(state.files.map(f => f.group || 'untagged'))];
+      groupFilter.innerHTML = '<option value="">All groups</option>' + groups.map(g => `<option value="${g}">${g}</option>`).join('');
+      const gFilter = groupFilter.value;
+      const files = state.files.filter(f => !gFilter || (f.group || 'untagged') === gFilter);
+      fileList.innerHTML = files.map((f) => {
+        const realIdx = state.files.indexOf(f);
+        return `<div class="file-item">
+          ${f.type.startsWith('image/') ? `<img src="${f.data}" />` : '<span>📄</span>'}
+          <span style="flex:1">${f.name}</span>
+          <span class="tag">${f.group || 'untagged'}</span>
+          <button data-idx="${realIdx}" class="groupBtn" style="min-height:32px;padding:4px 10px;font-size:12px">Group</button>
+          <button data-idx="${realIdx}" class="delBtn" style="min-height:32px;padding:4px 10px;font-size:12px">×</button>
+        </div>`;
+      }).join('') || '<p class="muted">No files</p>';
+      document.querySelectorAll('.groupBtn').forEach(b => b.onclick = () => {
+        const g = prompt('Group name:', state.files[b.dataset.idx].group || '');
+        if (g !== null) { state.files[b.dataset.idx].group = g.trim() || 'untagged'; save(); render(); }
       });
-    });
-    menuBtn.addEventListener('click', () => nav.classList.toggle('open'));
-    sendBtn.addEventListener('click', send);
-    inputField.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
-    clearBtn.addEventListener('click', () => {
-      if (confirm('Clear all local data?')) {
-        inputs = []; logs = [];
-        localStorage.removeItem('k_inputs');
-        localStorage.removeItem('k_logs');
-        addLog('Local data cleared');
-        render();
-      }
-    });
-    themeSelect.addEventListener('change', () => {
+      document.querySelectorAll('.delBtn').forEach(b => b.onclick = () => {
+        state.files.splice(b.dataset.idx, 1); save(); render();
+      });
+      const todayInputs = todayCount(state.inputs);
+      const todayFiles = todayCount(state.files);
+      digest.textContent = todayInputs || todayFiles
+        ? `${todayInputs} input${todayInputs!==1?'s':''} · ${todayFiles} file${todayFiles!==1?'s':''} today`
+        : 'No activity yet.';
+    }
+    function sendInput(text) {
+      if (!state.me) { alert('Set your identity first (Members)'); return; }
+      if (!text.trim()) return;
+      const today = new Date().toDateString();
+      state.inputs.push({ text: text.trim(), who: state.me, time: new Date().toLocaleTimeString(), date: today });
+      log('Input by ' + state.me);
+      save(); render();
+    }
+    function addFile(file) {
+      if (file.size > MAX_FILE) { alert(file.name + ' is over 2 MB. Skipped.'); return; }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const today = new Date().toDateString();
+        state.files.push({ name: file.name, type: file.type, data: reader.result, group: 'untagged', date: today });
+        log('File added: ' + file.name);
+        save(); render();
+      };
+      reader.readAsDataURL(file);
+    }
+    links.forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      const id = a.dataset.section;
+      sections.forEach(s => s.classList.toggle('active', s.id === id));
+      links.forEach(l => l.classList.toggle('active', l === a));
+      nav.classList.remove('open');
+    }));
+    menuBtn.onclick = () => nav.classList.toggle('open');
+    setNameBtn.onclick = () => {
+      const n = nameInput.value.trim();
+      if (!n) return;
+      state.me = n;
+      log('Identity set: ' + n);
+      save(); render();
+      nameInput.value = '';
+    };
+    quickSend.onclick = () => { sendInput(quickInput.value); quickInput.value = ''; };
+    quickInput.onkeydown = e => { if (e.key === 'Enter') { sendInput(quickInput.value); quickInput.value = ''; } };
+    searchInput.oninput = () => { filter = searchInput.value.toLowerCase().trim(); render(); };
+    addAgent.onclick = () => {
+      if (!state.me) return alert('Set identity first');
+      const n = agentName.value.trim();
+      if (!n) return;
+      state.agents.push({ name: n, owner: state.me });
+      log('Agent slot: ' + n);
+      save(); render();
+      agentName.value = '';
+    };
+    addApp.onclick = () => {
+      if (!state.me) return alert('Set identity first');
+      const n = appName.value.trim();
+      if (!n) return;
+      state.apps.push({ name: n, owner: state.me });
+      log('App added: ' + n);
+      save(); render();
+      appName.value = '';
+    };
+    dropZone.onclick = () => fileInput.click();
+    dropZone.ondragover = e => { e.preventDefault(); dropZone.classList.add('over'); };
+    dropZone.ondragleave = () => dropZone.classList.remove('over');
+    dropZone.ondrop = e => {
+      e.preventDefault();
+      dropZone.classList.remove('over');
+      [...e.dataTransfer.files].forEach(addFile);
+    };
+    fileInput.onchange = () => { [...fileInput.files].forEach(addFile); fileInput.value = ''; };
+    groupFilter.onchange = render;
+    themeSelect.onchange = () => {
       document.documentElement.dataset.theme = themeSelect.value === 'dim' ? 'dim' : '';
       localStorage.setItem('k_theme', themeSelect.value);
-    });
+    };
     const savedTheme = localStorage.getItem('k_theme');
-    if (savedTheme) {
-      themeSelect.value = savedTheme;
-      document.documentElement.dataset.theme = savedTheme === 'dim' ? 'dim' : '';
-    }
+    if (savedTheme) { themeSelect.value = savedTheme; document.documentElement.dataset.theme = savedTheme === 'dim' ? 'dim' : ''; }
+    exportBtn.onclick = () => {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'k-state.json';
+      a.click();
+    };
+    importBtn.onclick = () => importFile.click();
+    importFile.onchange = () => {
+      const f = importFile.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = () => {
+        try {
+          const imported = JSON.parse(r.result);
+          state = { ...state, ...imported };
+          save(); render();
+          log('State imported');
+        } catch (e) { alert('Invalid file'); }
+      };
+      r.readAsText(f);
+    };
+    clearBtn.onclick = () => {
+      if (confirm('Clear all local data?')) {
+        state = { me: '', inputs: [], agents: [], apps: [], files: [], logs: [], members: [] };
+        save(); render();
+      }
+    };
     render();
   </script>
 </body>
